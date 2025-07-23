@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import LoadingSpinner from "./LoadingSpinner";
 
-export default function ProtectedRoute({ children , adminOnly = false }) {
-  const { isAuthenticated, isAdmin, loading} = useAuth();
+export default function ProtectedRoute({ adminOnly = false }) {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
   
   if (loading) {
     return <LoadingSpinner />;
@@ -15,5 +15,5 @@ export default function ProtectedRoute({ children , adminOnly = false }) {
     return <Navigate to="/products" replace />;
   }
   
-  return children;
+  return <Outlet />;
 } 

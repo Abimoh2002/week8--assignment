@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, User, Phone, Flame } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -55,7 +55,7 @@ export default function Register() {
     }
      setIsLoading(true); 
 
-     const { confirmPassword, ...registrationData } = formData; 
+     const { confirmPassword: _confirmPassword, ...registrationData } = formData; 
      const result = await register(registrationData);
 
      if (result.success) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { getProductImage } from '../assets/images';
+import { getProductImage } from '../../assets/image';
 
 /**
  * Product component for displaying a single product with image and details.

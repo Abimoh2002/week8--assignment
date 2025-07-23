@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Eye, EyeOff, Mail, Lock, Flame, LogOut, User, Shield, Home } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -70,6 +70,7 @@ export default function Login() {
         setErrors({ form: result.message || 'Login failed. Please try again.' });
       }
     } catch (error) {
+      console.error('Login error:', error);
       setErrors({ form: 'An unexpected error occurred. Please try again.' });
     } finally {
       setIsLoading(false);

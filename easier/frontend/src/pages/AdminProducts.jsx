@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Plus, Upload, Edit, Trash2 } from 'lucide-react';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 import { Dialog } from '@headlessui/react';
 import Papa from 'papaparse';
 import { productsAPI } from '../services/api';
@@ -70,6 +70,7 @@ export default function AdminProducts() {
       await productsAPI.approve(id);
       setProducts(products.map(p => p._id === id ? { ...p, approvalStatus: 'approved' } : p));
     } catch (err) {
+      console.error('Approve product error:', err);
       alert('Failed to approve product.');
     } finally {
       setActionLoading(l => ({ ...l, [id]: false }));
@@ -81,6 +82,7 @@ export default function AdminProducts() {
       await productsAPI.reject(id);
       setProducts(products.map(p => p._id === id ? { ...p, approvalStatus: 'rejected' } : p));
     } catch (err) {
+      console.error('Reject product error:', err);
       alert('Failed to reject product.');
     } finally {
       setActionLoading(l => ({ ...l, [id]: false }));
@@ -164,6 +166,7 @@ export default function AdminProducts() {
         setBulkLoading(false);
       },
       error: (err) => {
+        console.error('CSV parse error:', err);
         setBulkError('Failed to parse CSV.');
         setBulkLoading(false);
       }

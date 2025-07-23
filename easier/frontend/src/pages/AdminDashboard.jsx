@@ -13,7 +13,7 @@ import {
   BarChart3
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 import { productsAPI } from '../services/api';
 
 export default function AdminDashboard() {
@@ -55,6 +55,7 @@ export default function AdminDashboard() {
       const products = res.data.products || res.data;
       setLowStock(products.filter(p => p.stockQuantity < 5 && p.approvalStatus === 'approved'));
     } catch (err) {
+      console.error('Fetch low stock error:', err);
       setLowStock([]);
     }
   };

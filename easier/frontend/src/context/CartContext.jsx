@@ -1,9 +1,10 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { cartAPI } from '../services/api';
 import { useAuth } from './AuthContext';
 
 const CartContext = createContext();
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -24,9 +25,9 @@ export const CartProvider = ({ children }) => {
     } else {
       setCart({ items: [], total: 0 });
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, fetchCart]);
 
-  const fetchCart = async () => {
+  const fetchCart = useCallback(async () => {
     if (!isAuthenticated) return;
     
     setLoading(true);
@@ -39,7 +40,7 @@ export const CartProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAuthenticated]);
 
   const addToCart = async (productId, quantity = 1) => {
     if (!isAuthenticated) {

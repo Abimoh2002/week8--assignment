@@ -1,5 +1,5 @@
 import React from 'react';
-import { getProductImage } from '../assets/images';
+import { getProductImage } from '../../assets/image';
 
 export default function BrandProductCard({ product, onAddToCart, onOrderNow, loading = false }) {
   // Prefer product.imageUrl if available, otherwise use getProductImage

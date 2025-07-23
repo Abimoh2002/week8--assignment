@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Eye, Package, Truck, CheckCircle, XCircle } from 'lucide-react';
 import { ordersAPI } from '../services/api';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
@@ -16,7 +16,7 @@ export default function AdminOrders() {
 
   useEffect(() => {
     filterOrders();
-  }, [orders, searchQuery, selectedStatus]);
+  }, [orders, searchQuery, selectedStatus, filterOrders]);
 
   const fetchOrders = async () => {
     try {
@@ -29,7 +29,7 @@ export default function AdminOrders() {
     }
   };
 
-  const filterOrders = () => {
+  const filterOrders = useCallback(() => {
     let filtered = orders;
 
     // Filter by search query
@@ -47,7 +47,7 @@ export default function AdminOrders() {
     }
 
     setFilteredOrders(filtered);
-  };
+  }, [orders, searchQuery, selectedStatus]);
 
   const updateOrderStatus = async (orderId, newStatus) => {
     try {

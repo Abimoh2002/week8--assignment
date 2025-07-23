@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { AuthProvider , useAuth} from './context/AuthContext';
+import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 
 // Layout Components
@@ -9,13 +9,13 @@ import AppLayout from './components/Layout/AppLayout';
 import PublicLayout from './components/Layout/PublicLayout';
 
 // Route Guards
-import ProtectedRoute from './components/ProtectedRoute';
-import PublicRoute from './components/PublicRoute';
-import AdminRoute from './components/AdminRoute';
+import ProtectedRoute from './components/Layout/ProtectedRoute';
+import PublicRoute from './components/Layout/PublicRoute';
+import AdminRoute from './components/Layout/AdminRoute';
 
 // Pages
 import Home from './pages/Home';
-import Login from './pages/Login';
+import Login from './pages/login';
 import Register from './pages/Register';
 import Products from './pages/Products';
 import Orders from './pages/Orders';

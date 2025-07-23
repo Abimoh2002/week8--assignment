@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Search, Edit, Trash2, UserPlus, Eye, X } from 'lucide-react';
 import { usersAPI } from '../services/api';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 import toast from 'react-hot-toast';
 
 export default function AdminUsers() {
@@ -25,7 +25,7 @@ export default function AdminUsers() {
 
   useEffect(() => {
     filterUsers();
-  }, [users, searchQuery, selectedRole]);
+  }, [users, searchQuery, selectedRole, filterUsers]);
 
   const fetchUsers = async () => {
     try {
@@ -38,7 +38,7 @@ export default function AdminUsers() {
     }
   };
 
-  const filterUsers = () => {
+  const filterUsers = useCallback(() => {
     let filtered = users;
 
     // Filter by search query
@@ -55,7 +55,7 @@ export default function AdminUsers() {
     }
 
     setFilteredUsers(filtered);
-  };
+  }, [users, searchQuery, selectedRole]);
 
   const handleDeleteUser = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {

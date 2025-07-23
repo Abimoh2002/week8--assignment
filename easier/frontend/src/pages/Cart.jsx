@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Trash2, Plus, Minus, ShoppingCart, ArrowRight } from 'lucide-react';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCart } from '../context/CartContext';
-import { getProductImage } from '../assets/images';
+import { getProductImage } from '../assets/image';
 
 export default function Cart() {
   const [step, setStep] = useState(1);
@@ -30,6 +30,7 @@ export default function Cart() {
     try {
       await updateCartItem(itemId, newQuantity);
     } catch (error) {
+      console.error('Update cart error:', error);
       toast.error('Failed to update cart');
     }
   };
@@ -39,6 +40,7 @@ export default function Cart() {
       await removeFromCart(itemId);
       toast.success('Item removed from cart');
     } catch (error) {
+      console.error('Remove cart item error:', error);
       toast.error('Failed to remove item from cart');
     }
   };
@@ -50,6 +52,7 @@ export default function Cart() {
       await clearCart();
       toast.success('Cart cleared');
     } catch (error) {
+      console.error('Clear cart error:', error);
       toast.error('Failed to clear cart');
     }
   };
@@ -81,6 +84,7 @@ export default function Cart() {
       toast.success('Order placed!');
       navigate('/orders');
     } catch (err) {
+      console.error('Place order error:', err);
       toast.error('Failed to place order');
     }
   };

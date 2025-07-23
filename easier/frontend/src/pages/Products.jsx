@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import BrandProductCard from '../components/BrandProductCard';
+import BrandProductCard from '../components/Layout/BrandProduct';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
 import { productsAPI } from '../services/api';
 import toast from 'react-hot-toast';
 import { useNavigate, useLocation } from 'react-router-dom';
-import LoadingSpinner from '../components/LoadingSpinner';
+import LoadingSpinner from '../components/Layout/LoadingSpinner';
 
 export default function Products() {
   const [search, setSearch] = useState('');
@@ -66,6 +66,7 @@ export default function Products() {
       await addToCart(product._id, 1);
       toast.success(`${product.name} added to cart!`);
     } catch (error) {
+      console.error('Add to cart error:', error);
       toast.error('Failed to add item to cart');
     }
   };

@@ -289,7 +289,7 @@ const updateCartItem = async (req, res) => {
     const { quantity } = req.body;
     const itemId = req.params.itemId;
 
-    console.log('Updating cart item:', { itemId, quantity, userId: req.user._id });
+
 
     if (!quantity || quantity <= 0) {
       return res.status(400).json({ message: 'Invalid quantity' });
@@ -300,16 +300,13 @@ const updateCartItem = async (req, res) => {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    console.log('Cart found:', cart._id);
-    console.log('Cart items:', cart.items.map(item => ({ id: item._id, product: item.product, quantity: item.quantity })));
 
     const cartItem = cart.items.id(itemId);
     if (!cartItem) {
-      console.log('Cart item not found for ID:', itemId);
       return res.status(404).json({ message: 'Cart item not found' });
     }
 
-    console.log('Cart item found:', { id: cartItem._id, product: cartItem.product, oldQuantity: cartItem.quantity, newQuantity: quantity });
+
 
     // Check product availability
     const product = await Product.findById(cartItem.product);
@@ -320,7 +317,7 @@ const updateCartItem = async (req, res) => {
     cartItem.quantity = quantity;
     await cart.save();
 
-    console.log('Cart item updated successfully');
+
 
     const updatedCart = await Cart.findById(cart._id).populate('items.product', 'name brand price imageUrl description cylinderSize brand');
     
@@ -348,28 +345,25 @@ const updateCartItem = async (req, res) => {
 const removeFromCart = async (req, res) => {
   try {
     const itemId = req.params.itemId;
-    console.log('Removing cart item:', { itemId, userId: req.user._id });
+
 
     const cart = await Cart.findOne({ user: req.user._id });
     if (!cart) {
       return res.status(404).json({ message: 'Cart not found' });
     }
 
-    console.log('Cart found:', cart._id);
-    console.log('Cart items:', cart.items.map(item => ({ id: item._id, product: item.product, quantity: item.quantity })));
 
     const cartItem = cart.items.id(itemId);
     if (!cartItem) {
-      console.log('Cart item not found for ID:', itemId);
       return res.status(404).json({ message: 'Cart item not found' });
     }
 
-    console.log('Cart item found for removal:', { id: cartItem._id, product: cartItem.product, quantity: cartItem.quantity });
+
 
     cartItem.remove();
     await cart.save();
 
-    console.log('Cart item removed successfully');
+
 
     const updatedCart = await Cart.findById(cart._id).populate('items.product', 'name brand price imageUrl description cylinderSize brand');
     
